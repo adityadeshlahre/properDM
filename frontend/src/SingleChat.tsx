@@ -1,16 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "./hooks/ws";
-
-interface SingleChatProps {
-  id: string;
-}
+import { messages, SingleChatProps } from "./types/chat";
 
 const SingleChat: React.FC<SingleChatProps> = () => {
   const { id } = useParams<{ id: string }>();
   const [messages, setMessages] = useState<string[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isChatRead, setIsChatRead] = useState(false);
   const socket = useSocket();
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/messages/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch messages");
+        }
+
+        const data = await response.json();
+        const messageContents = data.messages.map(
+          (message: messages) => message.content
+        );
+        setMessages(messageContents);
+
+        if (!data.last_message.read) {
+          markChatAsRead(id as string);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMessages();
+  }, [id]);
 
   useEffect(() => {
     if (!socket) return;
@@ -33,13 +65,61 @@ const SingleChat: React.FC<SingleChatProps> = () => {
     };
   }, [socket]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setNewMessage("");
+
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/sendmessage/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              content: newMessage,
+              created_at: new Date().toISOString(),
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to send message");
+        }
+
+        const data = await response.json();
+        console.log(data.message); // Log success message
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
     } else {
       console.error("WebSocket is not connected");
+    }
+  };
+
+  const markChatAsRead = async (chatId: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/markasread/${chatId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ read: true }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to mark chat as read");
+      }
+
+      setIsChatRead(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
