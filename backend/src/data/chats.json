@@ -1,0 +1,23 @@
+{
+  "chats": [
+    {
+      "chat_id": 10000,
+      "sender_details": {
+        "user_id": -100,
+        "profile_data": {
+          "first_name": "Rohit",
+          "last_name": "Sharma",
+          "profile_picture": "",
+          "headline": "",
+          "followers": "8787878"
+        }
+      },
+      "last_message": {
+        "id": "kjfds;kljf;kjsadklfn",
+        "content": "Awesome, texted you there. Thanks",
+        "created_at": "2024-05-29T04:14:45.614Z",
+        "status": "DELIVERED"
+      }
+    }
+  ]
+}
