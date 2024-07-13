@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts --ignore '*.json'",
     "build": "tsc -b"
   },
   "keywords": [],
@@ -23,5 +23,9 @@
     "nodemon": "^3.1.4",
     "typescript": "^5.5.3",
     "ws": "^8.18.0"
-  }
+  },
+  "ignore": [
+    "*.json"
+  ],
+  "delay": "1000"
 }

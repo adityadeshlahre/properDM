@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "./hooks/ws";
 import { messages, SingleChatProps } from "./types/chat";
+import CreateChatButton from "./button/CreateChatButton";
 
 const SingleChat: React.FC<SingleChatProps> = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,6 +10,39 @@ const SingleChat: React.FC<SingleChatProps> = () => {
   const [newMessage, setNewMessage] = useState("");
   const [isChatRead, setIsChatRead] = useState(false);
   const socket = useSocket();
+
+  useEffect(() => {
+    const fetchFullChatInfo = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/message/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch messages");
+        }
+
+        const data = await response.json();
+        const messageContents = data.messages.map(
+          (message: messages) => message.content
+        );
+        if (!data.last_message.read) {
+          markChatAsRead(id as string);
+        }
+        setMessages(messageContents);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFullChatInfo();
+  }, [id]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -32,10 +66,6 @@ const SingleChat: React.FC<SingleChatProps> = () => {
           (message: messages) => message.content
         );
         setMessages(messageContents);
-
-        if (!data.last_message.read) {
-          markChatAsRead(id as string);
-        }
       } catch (error) {
         console.error(error);
       }
@@ -91,7 +121,7 @@ const SingleChat: React.FC<SingleChatProps> = () => {
         }
 
         const data = await response.json();
-        console.log(data.message); // Log success message
+        console.log(data.message);
       } catch (error) {
         console.error("Error sending message:", error);
       }
@@ -143,7 +173,12 @@ const SingleChat: React.FC<SingleChatProps> = () => {
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
       />
+      <br />
+      <br />
       <button onClick={sendMessage}>Send</button>
+      <br />
+      <br />
+      <CreateChatButton />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chat } from "./types/chat";
 import { useNavigate } from "react-router-dom";
+import CreateChatButton from "./button/CreateChatButton";
 
 const AllChat: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -75,6 +76,9 @@ const AllChat: React.FC = () => {
           </li>
         ))}
       </ul>
+      <div>
+        <CreateChatButton />
+      </div>
     </div>
   );
 };
