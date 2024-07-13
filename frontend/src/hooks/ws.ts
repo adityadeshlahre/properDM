@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const WS_URL = "ws://localhost:5000";
+const WS_URL = "ws://properdm.onrender.com";
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
