@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts --ignore '*.json'",
-    "build": "tsc -b"
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -b && rm -rf dist/data && mkdir dist/data/ &&  cp -r src/data/* ./dist/data/",
+    "start": "node dist/index.js"
   },
   "nodemonConfig": {
     "watch": [
@@ -32,6 +33,7 @@
     "express": "^4.19.2",
     "json-server": "^1.0.0-beta.1",
     "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "ws": "^8.18.0"
   },
