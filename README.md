@@ -18,6 +18,12 @@
 
 ### SCREENSHOT's
 
+##### ROUTE : ALl Chats
+![image](https://github.com/user-attachments/assets/0af1475a-bf74-41af-b4b8-c6dcfe321162)
+##### ROUTE : Single Chat
+![image](https://github.com/user-attachments/assets/0d810b1d-d19b-41e1-938f-5a75b3a957ba)
+
+
 ### ToDo's
 
 - [ ] Chat Creation is broken
