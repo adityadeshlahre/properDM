@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsc -b && rm -rf dist/data && mkdir dist/data/ &&  cp -r src/data/* ./dist/data/",
+    "build": "npm install && tsc -b && rm -rf dist/data && mkdir dist/data/ &&  cp -r src/data/* ./dist/data/",
     "start": "node dist/index.js"
   },
   "nodemonConfig": {
