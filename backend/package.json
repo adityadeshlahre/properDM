@@ -6,6 +6,15 @@
     "dev": "nodemon src/index.ts --ignore '*.json'",
     "build": "tsc -b"
   },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "src/**/*.json"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
