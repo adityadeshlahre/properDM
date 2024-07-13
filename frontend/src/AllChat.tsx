@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Chat } from "./types/chat";
 import { useNavigate } from "react-router-dom";
 import CreateChatButton from "./button/CreateChatButton";
+import dotenv from "dotenv";
+dotenv.config();
+
+const BASE_URL = process.env.BASE_URL;
 
 const AllChat: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -13,7 +17,7 @@ const AllChat: React.FC = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/chats");
+        const response = await fetch(`${BASE_URL}/api/chats`);
         if (!response.ok) {
           throw new Error("Failed to fetch chats");
         }

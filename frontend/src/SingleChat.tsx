@@ -3,6 +3,10 @@ import { useParams } from "react-router-dom";
 import { useSocket } from "./hooks/ws";
 import { messages, SingleChatProps } from "./types/chat";
 import CreateChatButton from "./button/CreateChatButton";
+import dotenv from "dotenv";
+dotenv.config();
+
+const BASE_URL = process.env.BASE_URL;
 
 const SingleChat: React.FC<SingleChatProps> = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,15 +18,12 @@ const SingleChat: React.FC<SingleChatProps> = () => {
   useEffect(() => {
     const fetchFullChatInfo = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/message/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/api/message/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch messages");
@@ -47,15 +48,12 @@ const SingleChat: React.FC<SingleChatProps> = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/messages/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/api/messages/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch messages");
@@ -102,19 +100,16 @@ const SingleChat: React.FC<SingleChatProps> = () => {
       setNewMessage("");
 
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/sendmessage/${id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              content: newMessage,
-              created_at: new Date().toISOString(),
-            }),
-          }
-        );
+        const response = await fetch(`${BASE_URL}/api/sendmessage/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: newMessage,
+            created_at: new Date().toISOString(),
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("Failed to send message");
@@ -132,16 +127,13 @@ const SingleChat: React.FC<SingleChatProps> = () => {
 
   const markChatAsRead = async (chatId: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/markasread/${chatId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ read: true }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/markasread/${chatId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ read: true }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to mark chat as read");
