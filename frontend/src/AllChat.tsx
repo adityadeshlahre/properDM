@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Chat } from "./types/chat";
 import { useNavigate } from "react-router-dom";
 import CreateChatButton from "./button/CreateChatButton";
-import dotenv from "dotenv";
-dotenv.config();
-
-const BASE_URL = process.env.BASE_URL;
+import { BASE_URL } from "./hooks/utils";
 
 const AllChat: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -37,7 +34,7 @@ const AllChat: React.FC = () => {
     if (showUnread) {
       return chat.last_message.read === "false";
     }
-    return true; // Show all chats when showUnread is false
+    return true;
   };
 
   if (loading) {

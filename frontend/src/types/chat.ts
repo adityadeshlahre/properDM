@@ -34,3 +34,8 @@ export interface messages {
   content: string;
   created_at: string;
 }
+
+export interface MarkAsUnreadButtonProps {
+  chatId: string;
+  isRead: boolean;
+}

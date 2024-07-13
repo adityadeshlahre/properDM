@@ -334,12 +334,12 @@ app.get("/api/messages/:chat_id", (req: any, res: any) => {
 
 app.post("/api/sendmessage/:chat_id", (req, res) => {
   const { chat_id } = req.params;
-  const { content, created_at } = req.body;
+  const { content } = req.body;
 
   const newMessage = {
     id: Math.random().toString(36).substring(7),
     content,
-    created_at,
+    created_at: new Date().toISOString(),
   };
 
   updateMessageFile(chat_id, newMessage);

@@ -57,7 +57,47 @@
         "content": "",
         "created_at": "",
         "status": "DELIVERED",
+        "read": "false"
+      }
+    },
+    {
+      "chat_id": "844112",
+      "sender_details": {
+        "user_id": "992",
+        "profile_data": {
+          "first_name": "1p1t87",
+          "last_name": "po0rbk",
+          "profile_picture": "",
+          "headline": "",
+          "followers": "606071"
+        }
+      },
+      "last_message": {
+        "id": "",
+        "content": "",
+        "created_at": "",
+        "status": "DELIVERED",
         "read": "true"
+      }
+    },
+    {
+      "chat_id": "383521",
+      "sender_details": {
+        "user_id": "868",
+        "profile_data": {
+          "first_name": "0ad6qf",
+          "last_name": "rhpwxc",
+          "profile_picture": "",
+          "headline": "",
+          "followers": "985568"
+        }
+      },
+      "last_message": {
+        "id": "",
+        "content": "",
+        "created_at": "",
+        "status": "DELIVERED",
+        "read": "false"
       }
     }
   ]

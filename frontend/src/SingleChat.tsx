@@ -3,10 +3,8 @@ import { useParams } from "react-router-dom";
 import { useSocket } from "./hooks/ws";
 import { messages, SingleChatProps } from "./types/chat";
 import CreateChatButton from "./button/CreateChatButton";
-import dotenv from "dotenv";
-dotenv.config();
-
-const BASE_URL = process.env.BASE_URL;
+import { BASE_URL } from "./hooks/utils";
+import MarkAsUnreadButton from "./button/MarkAsUnreadedChat";
 
 const SingleChat: React.FC<SingleChatProps> = () => {
   const { id } = useParams<{ id: string }>();
@@ -107,7 +105,6 @@ const SingleChat: React.FC<SingleChatProps> = () => {
           },
           body: JSON.stringify({
             content: newMessage,
-            created_at: new Date().toISOString(),
           }),
         });
 
@@ -168,6 +165,9 @@ const SingleChat: React.FC<SingleChatProps> = () => {
       <br />
       <br />
       <button onClick={sendMessage}>Send</button>
+      <br />
+      <br />
+      <MarkAsUnreadButton chatId={id as string} isRead={isChatRead} />
       <br />
       <br />
       <CreateChatButton />

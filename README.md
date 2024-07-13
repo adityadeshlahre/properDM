@@ -21,6 +21,7 @@
 ### ToDo's
 
 - [ ] Chat Creation is broken
+- [ ] Polling functionality
 - [ ] profile picture displaying
 - [ ] chat is readed/unreaded {displaying}
 - [ ] user auth/social login
