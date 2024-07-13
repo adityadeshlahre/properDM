@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MarkAsUnreadButtonProps } from "../types/chat";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../hooks/utils";
 
 const MarkAsUnreadButton: React.FC<MarkAsUnreadButtonProps> = ({
   chatId,
@@ -11,16 +12,13 @@ const MarkAsUnreadButton: React.FC<MarkAsUnreadButtonProps> = ({
 
   const toggleReadStatus = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/markasread/${chatId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ read: !readStatus }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/markasread/${chatId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ read: !readStatus }),
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
